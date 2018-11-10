@@ -1,1 +1,49 @@
+<#
 
+NOTES:
+- Make sure the JRE executable exists in the $JavaSource directory below
+- You can specify the Java Installer in the $JavaExe below
+- The Java installation parameters are specified in the $JavaConfigtext below
+
+v.1
+
+#>
+
+
+# Software Location  <--- Change Me
+$JavaSource = "C:\users\fmalik\documents\Deployments\Java"
+
+# Java Installer  <--- Change Me
+$JavaExe = "jre-8u161-windows-x64.exe"
+
+# Verify Software Exists
+$TestSource = Test-Path -Path "$JavaSource\$JavaExe"
+
+
+If($TestSource -eq "False")
+
+    {
+        Write-Host "Java software not found '$JavaSource'" -ForegroundColor Red
+        #Exit
+    }
+
+Write-host Testtttttttttttttttttttttt -ForegroundColor Yellow
+
+<#
+
+$JavaConfig =  #  <--- Change Me
+
+"INSTALL_SILENT=Enable
+INSTALLDIR=D:\Java
+AUTO_UPDATE=Disable
+SPONSORS=Disable
+REBOOT=Disable
+REMOVEOUTOFDATEJRES=1"
+    
+$JavaConfig | Set-Content "$JavaSource\jreinstall.cfg" -Force
+
+
+# Install Java
+Start-Process -FilePath "$JavaSource\$JavaExe" -ArgumentList INSTALLCFG="$JavaSource\jreinstall.cfg" -Wait
+
+#>
